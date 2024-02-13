@@ -1,44 +1,41 @@
-import reservation from '../models/reservation.js';
 
+import Reservation from '../models/reservation';
+import Event from '../models/event';
+import Services from '../models/services';
+import Personnel from '../models/personnel';
+import Tools from '../models/tools';
+import mongoose from 'mongoose';
 
 const createreservation = async (req, res) => {
-  const { managerId, owner, floor, price, paid, cin } = req.body;
-
-
   try {
-    const newreservation = new reservation({
-      Manager_id: managerId,
-      owner: owner,
-      etage: floor,
-      cin: cin,
-      price: price || 0,
-      paid: paid || false,
+    // Extract relevant data from the request
+    const { price, details, userId, eventData, servicesData } = req.body;
+
+    // Check if userId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid userId' });
+    }
+
+    
+
+    // Create reservation
+    const reservation = await Reservation.create({
+      price,
+      details,
+      userId: mongoose.Types.ObjectId(userId),  // Convert userId to ObjectId
+      eventId: event._id,
+      servicesId: services._id,
     });
 
-
-    const savedreservation = await newreservation.save();
-
-    const newPayment = new payment({
-
-      userId: managerId,
-      reservation: newreservation._id,
-      Pay_Date: Date.now(),
-      
-    });
-
-    const savedPayment = await newPayment.save();
-
-    const result = {
-      savedreservation: savedreservation,
-      savedPayment: savedPayment
-    };
-
-    res.status(201).json(result);
+    res.status(201).json({ reservation });
   } catch (error) {
-    console.error('Error creating reservation:', error);
-    res.status(500).json({ error: 'Could not create reservation' });
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
+
 
 
 

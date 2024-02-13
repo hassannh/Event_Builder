@@ -1,12 +1,12 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
-const reservationSchema = new Schema({
-    
+const reservationSchema = new mongoose.Schema({
     price: { type: Number, default: 0 },
-    paid: { type: Boolean ,default: false },
-   
-});
-
-const reservation = model('reservation', reservationSchema);
-
-export default reservation
+    eventId: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
+    details: Array,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  });
+  
+  const Reservation = mongoose.model('Reservation', reservationSchema);
+  
+  module.exports = Reservation;

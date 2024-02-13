@@ -12,7 +12,7 @@ describe('Login Controller', () => {
       .post('/api/user/login') 
       .send(loginData);
 
-    expect(response.status).toBe(200); // Corrected status code for successful login
+    expect(response.status).toBe(200); 
     expect(response.body).toHaveProperty('message', 'Login successful');
     expect(response.body).toHaveProperty('token');
     expect(response.body).toHaveProperty('user');
@@ -28,7 +28,7 @@ describe('Login Controller', () => {
       .post('/api/user/login')
       .send(nonExistingUser);
 
-    expect(response.status).toBe(404); // Checking for a 404 when the user doesn't exist
+    expect(response.status).toBe(404); 
     expect(response.body).toHaveProperty('message', 'User not found');
   });
 

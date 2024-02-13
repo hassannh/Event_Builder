@@ -3,14 +3,15 @@ import users from '../models/users.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 
+
+
+
 const register = async (req, res) => {
 
  
-  const { firstName ,email, password } = req.body;
-
-  
+  const { firstName ,lastName,email, password } = req.body;
   try {
-     
+
       const existingEmail = await users.findOne({ email });
 
       if (existingEmail) {
@@ -19,7 +20,7 @@ const register = async (req, res) => {
 
      const hashedPassword = await bcrypt.hash(password, 10);
 
-     const newUser = new users({ firstName, email, password: hashedPassword });
+     const newUser = new users({ firstName,lastName, email, password: hashedPassword });
      await newUser.save();
 
       const token = jwt.sign({ userId: newUser._id }, 'SecretKey', { expiresIn: '24h' });
