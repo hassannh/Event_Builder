@@ -10,11 +10,11 @@ const router = Router();
 
 
 
-router.post('/create', createreservation);
+router.post('/create',createreservation);
 
 router.get('/getAll',verifyToken, getAll);
 
-
+// remove /update /drop and getall /creat
 router.put('/update/:id', updatereservation);
 
 
