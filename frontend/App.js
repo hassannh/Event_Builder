@@ -4,7 +4,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './Redux/store'
-import navigator from './TabBarNavigation/index'
+import navigator from './TabBarNavigation/Index'
 
 
 const Stack = createNativeStackNavigator();
@@ -15,17 +15,17 @@ export default function App() {
   return (
 
 
-    // <Provider store={store}>
+    <Provider store={store}>
       <NavigationContainer>
 
         <Stack.Navigator>
 
           <Stack.Screen name="AppTabs" component={navigator} />
-        
+
         </Stack.Navigator>
 
       </NavigationContainer>
-    // </Provider>
+    </Provider>
   );
 
 

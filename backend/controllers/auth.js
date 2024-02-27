@@ -1,5 +1,5 @@
 
-import users from '../models/users.js'; 
+import User from '../models/users.js'; 
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 
@@ -9,10 +9,12 @@ import jwt from 'jsonwebtoken';
 const register = async (req, res) => {
 
  
-  const { firstName ,lastName,email, password } = req.body;
+  const { firstName ,lastName,phone,email, password } = req.body;
+
+  console.log('backend api',req.body);
   try {
 
-      const existingEmail = await users.findOne({ email });
+      const existingEmail = await User.findOne({ email });
 
       if (existingEmail) {
           return res.status(400).json({ message: 'email already exists' });
@@ -20,7 +22,7 @@ const register = async (req, res) => {
 
      const hashedPassword = await bcrypt.hash(password, 10);
 
-     const newUser = new users({ firstName,lastName, email, password: hashedPassword });
+     const newUser = new User({ firstName,lastName, email,phone, password: hashedPassword });
      await newUser.save();
 
       const token = jwt.sign({ userId: newUser._id }, 'SecretKey', { expiresIn: '24h' });
@@ -32,7 +34,7 @@ const register = async (req, res) => {
 
       
   } catch (error) {
-      res.status(500).json({ message: 'Failed to register user', error: error.message });
+      res.status(500).json({ message: 'Failed to register user again', error: error.message });
   }
 };
 
