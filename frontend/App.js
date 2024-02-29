@@ -20,7 +20,7 @@ export default function App() {
 
         <Stack.Navigator>
 
-          <Stack.Screen name="AppTabs" component={navigator} />
+          <Stack.Screen name="AppTabs" component={navigator}  options={{ headerShown: false }}/>
 
         </Stack.Navigator>
 

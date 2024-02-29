@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text,Image ,StyleSheet} from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
@@ -11,9 +11,25 @@ const HomeScreen = () => {
 
     return (
         <View >
-            {/* <Text>{userData}</Text> */}
+            {/* <Image style={styles.homePic} source={require('../assets/eventHome.png')}/>
+
+           <Text style={styles.title}> Create Your Event</Text>
+           <Text style={styles.title}> in Your Own Way !</Text> */}
+
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+
+    homePic:{
+        height:'90%',
+        width:'100%'
+    },
+    title:{
+        fontSize:20,
+    }
+})
 
 export default HomeScreen

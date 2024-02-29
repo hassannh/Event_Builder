@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginTunk, registerTunk } from '../Redux/TunkMiddlwair/authTunk'
+import * as Animatable from 'react-native-animatable';
+
 
 const AuthForm = () => {
 
@@ -71,29 +73,37 @@ const AuthForm = () => {
 
 
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} name="firstName" placeholder="First Name" onChangeText={(text) => handleChange('firstName', text)} />
-                    <TextInput style={styles.input} name="lastName" placeholder="Last Name" onChangeText={(text) => handleChange('lastName', text)} />
-                    <TextInput style={styles.input} name="phone" placeholder="Phone" onChangeText={(text) => handleChange('phone', text)} />
-                    <TextInput style={styles.input} name="email" placeholder="Email" onChangeText={(text) => handleChange('email', text)} />
+                    <TextInput style={styles.input} name="firstName" placeholder="First Name" placeholderTextColor='white' onChangeText={(text) => handleChange('firstName', text)} />
+                    <TextInput style={styles.input} name="lastName" placeholder="Last Name" placeholderTextColor='white' onChangeText={(text) => handleChange('lastName', text)} />
+                    <TextInput style={styles.input} name="phone" placeholder="Phone" placeholderTextColor='white' onChangeText={(text) => handleChange('phone', text)} />
+                    <TextInput style={styles.input} name="email" placeholder="Email" placeholderTextColor='white' onChangeText={(text) => handleChange('email', text)} />
                     <TextInput
                         style={styles.input}
                         secureTextEntry={true}
                         name="password" placeholder="Password"
+                        placeholderTextColor='white'
                         onChangeText={(text) => handleChange('password', text)}
                     />
+                    <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
+                        <Text style={styles.ButtonText}>Submit</Text>
+                    </TouchableOpacity>
                 </View>
             ) : (
 
                 <View style={styles.inputContainer}>
 
-                    <TextInput style={styles.input} name="email" placeholder="Email" onChangeText={(text) => handleChangelogin('email', text)} />
+                    <TextInput style={styles.input} name="email" placeholder="Email" placeholderTextColor='white' onChangeText={(text) => handleChangelogin('email', text)} />
 
                     <TextInput
                         style={styles.input}
                         secureTextEntry={true}
                         name="password" placeholder="Password"
+                        placeholderTextColor='white'
                         onChangeText={(text) => handleChangelogin('password', text)}
                     />
+                    <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
+                        <Text style={styles.ButtonText}>Submit</Text>
+                    </TouchableOpacity>
                 </View>
 
             )}
@@ -101,9 +111,7 @@ const AuthForm = () => {
 
 
 
-            <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
-                <Text style={styles.ButtonText}>Submit</Text>
-            </TouchableOpacity>
+
         </View>
 
 
@@ -132,12 +140,13 @@ const styles = StyleSheet.create({
     input: {
         width: 300,
         height: 60,
-        backgroundColor: 'gray',
+        backgroundColor: '#2C3539',
         marginTop: 9,
         borderRadius: 30,
         paddingLeft: 12,
-        borderWidth: 1,
-        borderColor: 'yellow',
+        fontStyle:'italic',
+       
+
     },
     switchContainer: {
         flexDirection: 'row',
@@ -150,19 +159,19 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         marginTop: 20,
-        backgroundColor: 'gray',
+        backgroundColor: '#2C3539',
         padding: 15,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: 'yellow',
+        borderColor: '#696969',
         width: 120,
 
     },
     ButtonText: {
         color: 'white',
         fontWeight: 'bold',
-        marginLeft: 20
-
+        marginLeft: 20,
+        fontStyle:'italic',
     },
 
 })

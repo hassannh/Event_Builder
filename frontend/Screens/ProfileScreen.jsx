@@ -3,55 +3,20 @@ import AuthForm from '../Components/AuthForm'
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import { logOutAction } from '../Redux/Actions/authActions'
+import ProfileComponent from '../Components/ProfileComponent'
 
 
 const ProfileScreen = () => {
 
     const userData = useSelector(state => state.auth.user.UserData)
-    const dispatch = useDispatch()
-
-    console.log('user data :', userData);
 
 
-
-    const handleLogout = () => {
-        dispatch(logOutAction());
-    };
 
     return (
         <View style={styles.container}>
             {userData ? (
-                // <View style={styles.profileContainer}>
-                //     <Text style={styles.text}>{userData.firstName}</Text>
-                //     <Text style={styles.text}>{userData.lastName}</Text>
-                //     <Text style={styles.text}>{userData.email}</Text>
-                //     <Text style={styles.text}>{userData.phone}</Text>
-                //     <Button title="Logout" onPress={handleLogout} />
-                // </View>
 
-                <View >
-                    <View style={styles.header}></View>
-                    <Image
-                        style={styles.avatar}
-                        source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }}
-                    />
-                    <View style={styles.body}>
-                        <View style={styles.bodyContent}>
-                            <Text style={styles.name}>{userData.firstName} {userData.lastName}</Text>
-                            <Text style={styles.email}>{userData.email}</Text>
-                            <Text style={styles.email}>{userData.phone}</Text>
-                            <Text style={styles.description}>
-                                Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis,
-                                omittam deseruisse consequuntur ius an,
-                            </Text>
-
-                            <TouchableOpacity style={styles.buttonContainer} onPress={handleLogout}>
-                                <Text>LogOut</Text>
-                            </TouchableOpacity>
-                            
-                        </View>
-                    </View>
-                </View>
+                <ProfileComponent />
 
             ) : (
 
@@ -129,7 +94,7 @@ const styles = StyleSheet.create({
         width: 250,
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: 'yellow',
+        borderColor: '#696969',
         backgroundColor: 'gray',
     },
     text: {
