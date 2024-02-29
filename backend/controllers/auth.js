@@ -12,9 +12,14 @@ const register = async (req, res) => {
   const { firstName ,lastName,phone,email, password } = req.body;
 
   console.log('backend api',req.body);
+
   try {
 
+
       const existingEmail = await User.findOne({ email });
+
+      console.log('email if exist',existingEmail);
+
 
       if (existingEmail) {
           return res.status(400).json({ message: 'email already exists' });
@@ -23,6 +28,10 @@ const register = async (req, res) => {
      const hashedPassword = await bcrypt.hash(password, 10);
 
      const newUser = new User({ firstName,lastName, email,phone, password: hashedPassword });
+
+     console.log('new user ::',newUser);
+
+
      await newUser.save();
 
       const token = jwt.sign({ userId: newUser._id }, 'SecretKey', { expiresIn: '24h' });

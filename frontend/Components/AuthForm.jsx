@@ -1,8 +1,8 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Switch } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { registerTunk } from '../Redux/TunkMiddlwair/authTunk'
+import { loginTunk, registerTunk } from '../Redux/TunkMiddlwair/authTunk'
 
 const AuthForm = () => {
 
@@ -11,7 +11,7 @@ const AuthForm = () => {
 
 
     const [isLogin, setIsLogin] = useState(true);
-    const [signUp, setSignUp] = useState({
+    const [formData, setformData] = useState({
         firstName: '',
         lastName: '',
         phone: '',
@@ -22,12 +22,11 @@ const AuthForm = () => {
 
     const handleChange = (name, value) => {
 
-        setSignUp((prevSignUp) => ({
-            ...prevSignUp,
-            [name.toLowerCase()]: value,
+        setformData((prevformData) => ({
+            ...prevformData,
+            [name]: value,
         }));
     }
-
 
     const toggleSwitch = () => {
         setIsLogin((prevIsLogin) => !prevIsLogin);
@@ -35,18 +34,20 @@ const AuthForm = () => {
 
 
 
-    const register = async () => {
-        console.log('State just before dispatch:', signUp);
-        dispatch(registerTunk(signUp))
-        console.log('Form submitted!');
+
+    const handleSubmit = async () => {;
+        if (isLogin) {
+            dispatch(loginTunk(formData))
+        } else {
+            dispatch(registerTunk(formData));
+        }
     }
 
 
 
 
-
-
     return (
+
         <View style={styles.Container}>
             <View style={styles.switchContainer}>
 
@@ -58,37 +59,47 @@ const AuthForm = () => {
             <Text>{isLogin ? 'Login Form' : 'Register Form'}</Text>
 
 
-
-            <View style={styles.inputContainer}>
-                {!isLogin && (
-                    <>
-                        <TextInput style={styles.input} name="FirstName" placeholder="First Name" onChangeText={(text) => handleChange('FirstName', text)} />
-                        <TextInput style={styles.input} name="LastName" placeholder="Last Name" onChangeText={(text) => handleChange('LastName', text)} />
-                        <TextInput style={styles.input} name="Phone" placeholder="Phone" onChangeText={(text) => handleChange('Phone', text)} />
-
-                    </>
-                )}
+            {!isLogin ? (
 
 
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input} name="firstName" placeholder="First Name" onChangeText={(text) => handleChange('firstName', text)} />
+                    <TextInput style={styles.input} name="lastName" placeholder="Last Name" onChangeText={(text) => handleChange('lastName', text)} />
+                    <TextInput style={styles.input} name="phone" placeholder="Phone" onChangeText={(text) => handleChange('phone', text)} />
+                    <TextInput style={styles.input} name="email" placeholder="Email" onChangeText={(text) => handleChange('email', text)} />
+                    <TextInput
+                        style={styles.input}
+                        secureTextEntry={true}
+                        name="password" placeholder="Password"
+                        onChangeText={(text) => handleChange('password', text)}
+                    />
+                </View>
+            ) : (
 
-                <TextInput style={styles.input} name="Email" placeholder="Email" onChangeText={(text) => handleChange('Email', text)} />
+                <View style={styles.inputContainer}>
 
-                <TextInput
-                    style={styles.input}
-                    secureTextEntry={true}
-                    name="Password" placeholder="Password"
-                    onChangeText={(text) => handleChange('Password', text)}
-                />
+                    <TextInput style={styles.input} name="email" placeholder="Email" onChangeText={(text) => handleChange('email', text)} />
 
-                <TouchableOpacity onPress={register} style={styles.submitButton}>
-                    <Text style={styles.ButtonText}>Submit</Text>
-                </TouchableOpacity>
-            </View>
+                    <TextInput
+                        style={styles.input}
+                        secureTextEntry={true}
+                        name="password" placeholder="Password"
+                        onChangeText={(text) => handleChange('password', text)}
+                    />
+                </View>
 
-
+            )}
 
 
+
+
+            <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
+                <Text style={styles.ButtonText}>Submit</Text>
+            </TouchableOpacity>
         </View>
+
+
+
     )
 }
 

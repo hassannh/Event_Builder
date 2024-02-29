@@ -12,13 +12,13 @@ const initialState = {
       case LOGIN:
         return {
           ...state,
-          data: action.payload,
+          user: action.payload,
           error: null
         };
         case REGISTER:
         return {
           ...state,
-          data: action.payload,
+          user: action.payload,
           error: null
         };
         
