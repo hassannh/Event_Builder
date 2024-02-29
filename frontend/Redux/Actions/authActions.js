@@ -1,5 +1,5 @@
 import React from 'react'
-import { LOGIN ,REGISTER} from '../Types/authTypes'
+import { LOGIN ,REGISTER ,LOGOUT} from '../Types/authTypes'
 
 
 
@@ -12,4 +12,9 @@ export const loginAction = (data) => ({
   export const registerAction = (data) => ({
     type: REGISTER,
     payload: data,
+  });
+
+
+  export const logOutAction = () => ({
+    type: LOGOUT
   });

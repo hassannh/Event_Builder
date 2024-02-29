@@ -1,4 +1,4 @@
-import { LOGIN ,REGISTER} from "../Types/authTypes";
+import { LOGIN ,REGISTER ,LOGOUT} from "../Types/authTypes";
 
 
 const initialState = {
@@ -19,6 +19,13 @@ const initialState = {
         return {
           ...state,
           user: action.payload,
+          error: null
+        };
+
+        case LOGOUT:
+        return {
+          ...state,
+          user: '',
           error: null
         };
         

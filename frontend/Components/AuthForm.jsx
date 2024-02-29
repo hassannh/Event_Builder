@@ -19,6 +19,18 @@ const AuthForm = () => {
         password: ''
     });
 
+    const [loginData, setloginData] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleChangelogin = (name, value) => {
+
+        setloginData((loginData) => ({
+            ...loginData,
+            [name]: value,
+        }));
+    }
 
     const handleChange = (name, value) => {
 
@@ -35,16 +47,14 @@ const AuthForm = () => {
 
 
 
-    const handleSubmit = async () => {;
+    const handleSubmit = async () => {
+        ;
         if (isLogin) {
-            dispatch(loginTunk(formData))
+            dispatch(loginTunk(loginData))
         } else {
             dispatch(registerTunk(formData));
         }
     }
-
-
-
 
     return (
 
@@ -52,11 +62,9 @@ const AuthForm = () => {
             <View style={styles.switchContainer}>
 
                 <Text>Switch to {isLogin ? 'Register' : 'Login'}</Text>
-
-                <Switch value={isLogin} onValueChange={toggleSwitch} />
-
             </View>
-            <Text>{isLogin ? 'Login Form' : 'Register Form'}</Text>
+            <Switch value={isLogin} onValueChange={toggleSwitch} />
+
 
 
             {!isLogin ? (
@@ -78,13 +86,13 @@ const AuthForm = () => {
 
                 <View style={styles.inputContainer}>
 
-                    <TextInput style={styles.input} name="email" placeholder="Email" onChangeText={(text) => handleChange('email', text)} />
+                    <TextInput style={styles.input} name="email" placeholder="Email" onChangeText={(text) => handleChangelogin('email', text)} />
 
                     <TextInput
                         style={styles.input}
                         secureTextEntry={true}
                         name="password" placeholder="Password"
-                        onChangeText={(text) => handleChange('password', text)}
+                        onChangeText={(text) => handleChangelogin('password', text)}
                     />
                 </View>
 
