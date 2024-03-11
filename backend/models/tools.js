@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
+
+const typeEnumValues = ['chair', 'table', 'camera'];
+
 const toolsSchema = new mongoose.Schema({
-    
-    chairId: { type: mongoose.Schema.Types.ObjectId, ref: 'Chair' },
-    tableId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Table' },
-    lightsId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Lights' },
-   
+    type: { type: String },
+    enums: typeEnumValues
 });
 
 const Tools = mongoose.model('Tools', toolsSchema);

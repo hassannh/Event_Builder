@@ -2,10 +2,28 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import { logOutAction } from '../Redux/Actions/authActions'
-
-
+import * as ImagePicker from 'expo-image-picker';
 
 const ProfileComponent = () => {
+
+
+    const [image, setImage] = useState(null);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    };
+
 
     const userData = useSelector(state => state.auth.user.UserData)
     const dispatch = useDispatch()
@@ -21,13 +39,15 @@ const ProfileComponent = () => {
         <View >
 
             <View style={styles.header}>
-                
+                <TouchableOpacity onPress={pickImage}>
+                    <Image
+                        style={styles.avatar}
+                        source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }}
+                    />
+                </TouchableOpacity>
             </View>
-            
-            <Image
-                style={styles.avatar}
-                source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }}
-            />
+
+
             <View style={styles.body}>
                 <View style={styles.bodyContent}>
                     <Text style={styles.name}>{userData.firstName} {userData.lastName}</Text>

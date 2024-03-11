@@ -1,10 +1,14 @@
 import mongoose from 'mongoose';
 
+
+const typeEnumValues = ['security', 'chef', 'cleaner'];
 const personnelSchema = new mongoose.Schema({
     
-    clearnersNumber: { type: String },
-    securityNumber:{type: String},
-    serverNumber:{type: String},
+    Type: {
+        type: String,
+        enum: typeEnumValues,
+        required: true 
+    },
    
 });
 

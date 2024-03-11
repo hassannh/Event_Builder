@@ -15,8 +15,6 @@ const createEvent = async (req, res) => {
             eventName,
             eventDate: formattedDate,
             eventLocation,
-            visitors,
-            servicId: new mongoose.Types.ObjectId(servicId),
         });
 
         res.status(201).json({ event });

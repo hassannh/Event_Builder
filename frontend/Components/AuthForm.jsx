@@ -2,7 +2,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Switch } from 'rea
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginTunk, registerTunk } from '../Redux/TunkMiddlwair/authTunk'
+import { loginTunk, registerTunk } from '../Redux/TunkMiddlwire/authTunk'
 import * as Animatable from 'react-native-animatable';
 
 
@@ -45,8 +45,6 @@ const AuthForm = () => {
     const toggleSwitch = () => {
         setIsLogin((prevIsLogin) => !prevIsLogin);
     };
-
-
 
 
     const handleSubmit = async () => {
