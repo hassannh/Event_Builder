@@ -1,15 +1,21 @@
 import mongoose from 'mongoose';
 
 
-const typeEnumValues = ['security', 'chef', 'cleaner'];
 const personnelSchema = new mongoose.Schema({
-    
-    Type: {
+    type: {
         type: String,
-        enum: typeEnumValues,
-        required: true 
+        enum: ['security', 'chef', 'cleaner'],
+        required: true
     },
-   
+    quantity: {
+        type: Number,
+        default: 0
+    },
+    price: Number,
+    available: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const Personnel = mongoose.model('Personnel', personnelSchema);

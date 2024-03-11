@@ -1,18 +1,39 @@
 import mongoose from 'mongoose';
 
-const eventSchema = new mongoose.Schema({
 
-    eventName: { type: String },
-    startDate: { type: Date },
-    startTime: { type: Date },
-    hoursNumber: { type: Number },
-    snacksType: { type: String },
-    resourcesAvailable: { type: Boolean },
-    price: { type: Number },
-    location: {
-        name: { type: String }
+
+const resourceSchema = new mongoose.Schema({
+    type: String,
+    quantity: Number,
+    price: Number,
+    available: {
+        type: Boolean,
+        default: true
     }
+});
 
+const eventSchema = new mongoose.Schema({
+    eventName: String,
+    startDate: Date,
+    startTime: Date,
+    hoursNumber: Number,
+    price: Number,
+    location: {
+        name: String
+    },
+    personnel: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Personnel'
+    }],
+    snacks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Snacks'
+    }],
+    tools: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tools'
+    }],
+    resources: [resourceSchema]
 });
 
 const Event = mongoose.model('Event', eventSchema);

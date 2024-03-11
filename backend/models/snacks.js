@@ -1,16 +1,21 @@
 import mongoose from 'mongoose';
 
 
-const typeEnumValues = ['water', 'soda', 'cack'];
-
 const snacksSchema = new mongoose.Schema({
-    
-    Type: {
+    type: {
         type: String,
-        enum: typeEnumValues,
-        required: true 
+        enum: ['water', 'soda', 'cack'],
+        required: true
     },
-   
+    quantity: {
+        type: Number,
+        default: 0
+    },
+    price: Number,
+    available: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const Snacks = mongoose.model('Snacks', snacksSchema);

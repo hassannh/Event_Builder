@@ -54,7 +54,7 @@ const AddEvent = () => {
       />
 
       <Text style={styles.label}>location:</Text>
-      <SelectInput/>
+      <SelectInput />
 
     
 

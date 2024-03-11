@@ -1,11 +1,21 @@
 import mongoose from 'mongoose';
 
 
-const typeEnumValues = ['chair', 'table', 'camera'];
-
 const toolsSchema = new mongoose.Schema({
-    type: { type: String },
-    enums: typeEnumValues
+    type: {
+        type: String,
+        enum: ['chair', 'table', 'camera'],
+        required: true
+    },
+    quantity: {
+        type: Number,
+        default: 0
+    },
+    price: Number,
+    available: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const Tools = mongoose.model('Tools', toolsSchema);
