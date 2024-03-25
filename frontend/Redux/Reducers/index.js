@@ -5,6 +5,7 @@ import eventReducer from './eventReducer'
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    create: eventReducer
     
   });
   

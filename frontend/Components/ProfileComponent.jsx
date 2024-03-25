@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import { logOutAction } from '../Redux/Actions/authActions'
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileComponent = () => {
 
@@ -33,7 +34,11 @@ const ProfileComponent = () => {
 
 
     const handleLogout = () => {
-        dispatch(logOutAction());
+        AsyncStorage.removeItem('token').then(() => {
+            dispatch(logOutAction());
+        }).catch(error => {
+            console.error('Error removing token:', error);
+        });
     };
     return (
         <View >

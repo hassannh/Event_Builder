@@ -36,3 +36,5 @@ const eventReducer = (state = initialState, action) => {
 
 
 }
+
+export default eventReducer

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
+import {createEvent} from '../Redux/Actions/eventAction'
 import { Picker } from '@react-native-picker/picker';
 import PersonnelComponent from './PersonnelComponent';
 import ToolsComponent from './ToolsComponent';
 import SnacksComponent from './SnacksComponent';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import PagerView from 'react-native-pager-view';
+
+
+
 const AddEvent = () => {
   const [eventName, setEventName] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -190,18 +193,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width:400
   },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB'
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5'
-  },
+ 
 });
 
 export default AddEvent;

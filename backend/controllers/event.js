@@ -7,43 +7,62 @@ import Personnel from '../models/personnel';
 
 
 
-
 const createEvent = async (req, res) => {
 
-    const { eventName, startDate, startTime, hoursNumber, price, location } = req.body
-
-    console.log(req.body);
-
+ 
     try {
+
+        const { eventName, startDate, startTime, hoursNumber, location, personnel, snacks, tools } = req.body;
+
+        console.log(req.body);
+        
+
+        const personnelIds = await Promise.all(personnel.map(async (item) => {
+            const { type, quantity, price } = item;
+            const personnelData = new Personnel({ type, quantity, price });
+            const savedPersonnel = await personnelData.save();
+            return savedPersonnel._id;
+        }));
+
+        const snacksIds = await Promise.all(snacks.map(async (item) => {
+            const { type, quantity, price } = item;
+            const snacksData = new Snacks({ type, quantity, price });
+            const savedSnacks = await snacksData.save();
+            return savedSnacks._id;
+        }));
+
+        const toolsIds = await Promise.all(tools.map(async (item) => {
+            const { type, quantity, price } = item;
+            const toolsData = new Tools({ type, quantity, price });
+            const savedTools = await toolsData.save();
+            return savedTools._id;
+        }));
+
+
+
         const newEvent = new Event({
             eventName,
             startDate,
             startTime,
             hoursNumber,
-            price,
             location,
+            personnel: personnelIds,
+            snacks: snacksIds,
+            tools: toolsIds
         });
 
         const savedEvent = await newEvent.save();
+        res.json(savedEvent);
 
-        const personnelIds = await Personnel.find().limit(2).select('_id');
-        const snacksIds = await Snacks.find().limit(2).select('_id');
-        const toolsIds = await Tools.find().limit(2).select('_id');
-
-        savedEvent.personnel = personnelIds;
-        savedEvent.snacks = snacksIds;
-        savedEvent.tools = toolsIds;
-
-        const updatedEvent = await savedEvent.save();
-
-        res.json(updatedEvent);
-        return updatedEvent;
     } catch (error) {
         console.error('Error creating event:', error.message);
         throw error;
     }
 
 };
+
+
+
 
 
 

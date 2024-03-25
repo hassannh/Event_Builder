@@ -6,10 +6,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const loginTunk = (requestData) => async (dispatch) => {
 
+
     try {
 
 
-        const response = await axios.post('http://192.168.8.102:8000/api/user/login',requestData,{
+        const response = await axios.post('http://192.168.15.96:8000/api/user/login',requestData,{
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -33,7 +34,7 @@ const loginTunk = (requestData) => async (dispatch) => {
 const registerTunk = (requestData) => async (dispatch) => {
     try {
 
-        const response = await axios.post("http://192.168.8.102:8000/api/user/register", requestData, {
+        const response = await axios.post("http://192.168.15.96:8000/api/user/register", requestData, {
             headers: {
                 "Content-Type": "application/json"
             }

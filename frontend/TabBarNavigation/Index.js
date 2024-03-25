@@ -1,19 +1,44 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text } from 'react-native'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { FontAwesome } from "@expo/vector-icons";
 import HomeScreen from '../Screens/HomeScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 import AddEventScreen from '../Screens/AddEventScreen';
 import SearchScreen from '../Screens/SearchScreen';
-
-
+import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TabBar = createBottomTabNavigator();
 
 
-const Index = () => {
+const Index = ({ navigation }) => {
+
+    const [tokenExists, setTokenExists] = useState(false);
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+
+
+
+    const checkToken = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token');
+            if (token) {
+                console.log('toooooooken',token);
+                setTokenExists(true);
+            } else {
+                setTokenExists(false);
+            }
+        } catch (error) {
+            console.error('Error checking token:', error);
+        }
+    };
+
+
 
 
     return (
@@ -92,33 +117,28 @@ const Index = () => {
                 }}
             />
 
-
-
-
-
-
-            <TabBar.Screen name="event" component={AddEventScreen}
-                options={{
-                    tabBarIcon: ({ color, size, focused }) => (
-                        <View>
-                            <FontAwesome
-                                name="plus"
-                                size={32}
-                                color={focused ? "#76468F" : "#748c94"}
-                            />
-                            <Text
-                                style={{
-                                    color: focused ? "#76468F" : "#748c94",
-                                    fontSize: 12,
-                                }}
-                            >
-                                Event
-                            </Text>
-
-                        </View>
-                    ),
-                }}
-            />
+            
+                <TabBar.Screen name="AddEvent" component={AddEventScreen}
+                    options={{
+                        tabBarIcon: ({ color, size, focused }) => (
+                            <View>
+                                <FontAwesome
+                                    name="plus"
+                                    size={32}
+                                    color={focused ? "#76468F" : "#748c94"}
+                                />
+                                <Text
+                                    style={{
+                                        color: focused ? "#76468F" : "#748c94",
+                                        fontSize: 12,
+                                    }}>
+                                    Event
+                                </Text>
+                            </View>
+                        ),
+                    }}
+                />
+           
 
 
             <TabBar.Screen name="profile" component={ProfileScreen}

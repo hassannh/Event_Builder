@@ -6,13 +6,14 @@ const EventCard = ({ event }) => {
         <TouchableOpacity style={styles.card}>
             <Image
                 // source={event.image}
+                source={require('../assets/Eventoday.jpg')}
                 style={styles.cardImage}
-                resizeMode="cover"
+                // resizeMode="cover"
             />
             <View style={styles.cardContent}>
-                <Text style={styles.eventName}> event name</Text>
-                <Text style={styles.eventDate}>event.date</Text>
-                <Text style={styles.eventLocation}>event.location</Text>
+                <Text style={styles.eventName}> Welcome To Evanto</Text>
+                <Text style={styles.eventDate}>Build Your Own Event</Text>
+                <Text style={styles.eventLocation}>In Two Minuts</Text>
             </View>
         </TouchableOpacity>
     );
