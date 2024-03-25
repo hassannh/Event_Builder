@@ -4,6 +4,10 @@ import Tools from '../models/tools';
 import Snacks from '../models/snacks';
 import Personnel from '../models/personnel';
 
+
+
+
+
 const createEvent = async (req, res) => {
 
     const { eventName, startDate, startTime, hoursNumber, price, location } = req.body
@@ -11,8 +15,6 @@ const createEvent = async (req, res) => {
     console.log(req.body);
 
     try {
-
-
         const newEvent = new Event({
             eventName,
             startDate,
