@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const PersonnelComponent = ({ personnel }) => {
+const PersonnelComponent = ({ personnel, onAddPersonnel }) => {
     const [selectedPersonnel, setSelectedPersonnel] = useState('');
     const [personnelQuantity, setPersonnelQuantity] = useState('');
     const [personnelPrice, setPersonnelPrice] = useState('');
     const [selectedPersonnels, setSelectedPersonnels] = useState([]);
 
     useEffect(() => {
-        // Calculate personnel price
         if (personnelQuantity !== '') {
             const selectedPersonnelInfo = personnel.find(item => item.type === selectedPersonnel);
             if (selectedPersonnelInfo) {
@@ -33,12 +32,16 @@ const PersonnelComponent = ({ personnel }) => {
         }
     };
 
+    useEffect(() => {
+        onAddPersonnel(selectedPersonnels);
+    }, [selectedPersonnels]);
+
     return (
         <View>
             <Text style={styles.label}>Add Personnel:</Text>
             <View style={styles.selectContainer}>
                 <Picker
-                    selectedValue={selectedPersonnel}
+                    selectedValue={8}
                     onValueChange={(itemValue, itemIndex) => setSelectedPersonnel(itemValue)}
                     style={styles.selectInput}
                 >
@@ -62,19 +65,19 @@ const PersonnelComponent = ({ personnel }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Personnel Price"
-                value={personnelPrice}
+                value={personnelPrice + '$'}
                 onChangeText={setPersonnelPrice}
                 keyboardType="numeric"
                 editable={false}
             />
 
-            <Button title="Add Personnel" onPress={handleAddPersonnel} />
-
             {selectedPersonnels.map((personnel, index) => (
                 <View key={index}>
-                    <Text>{`Type: ${personnel.type}, Quantity: ${personnel.quantity}, Price: ${personnel.price}`}</Text>
+                    <Text>{`Type: ${personnel.type}, Quantity: ${personnel.quantity}, Price: ${personnel.price + '$'}`}</Text>
                 </View>
             ))}
+
+            <Button title="Add Personnel" onPress={handleAddPersonnel} />
         </View>
     );
 };

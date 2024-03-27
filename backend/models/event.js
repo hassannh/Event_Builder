@@ -2,22 +2,13 @@ import mongoose from 'mongoose';
 
 
 
-const resourceSchema = new mongoose.Schema({
-    type: String,
-    quantity: Number,
-    price: Number,
-    available: {
-        type: Boolean,
-        default: true
-    }
-});
-
 const eventSchema = new mongoose.Schema({
     eventName: String,
     startDate: Date,
-    startTime: Date,
+    startTime: String,
     hoursNumber: Number,
     price: Number,
+    userId:String,
     location: {
         name: String
     },
@@ -25,15 +16,14 @@ const eventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Personnel'
     }],
-    snacks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Snacks'
-    }],
+    // snacks: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Snacks'
+    // }],
     tools: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tools'
     }],
-    resources: [resourceSchema]
 });
 
 const Event = mongoose.model('Event', eventSchema);

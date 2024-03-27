@@ -2,79 +2,82 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const SnacksComponent = ({ snackTypes }) => {
-    const [snacksType, setSnacksType] = useState('');
-    const [snacksQuantity, setSnacksQuantity] = useState('');
-    const [snacksPrice, setSnacksPrice] = useState('');
+const SnacksComponent = ({ snacks, onAddSnacks }) => {
+    const [selectedSnack, setSelectedSnack] = useState('');
+    const [snackQuantity, setSnackQuantity] = useState('');
+    const [snackPrice, setSnackPrice] = useState('');
     const [selectedSnacks, setSelectedSnacks] = useState([]);
 
     useEffect(() => {
-        // Calculate snacks price
-        if (snacksQuantity !== '') {
-            const snack = snackTypes.find(item => item.type === snacksType);
-            if (snack) {
-                const totalPrice = parseFloat(snack.price) * parseInt(snacksQuantity);
-                setSnacksPrice(totalPrice.toString());
+        if (snackQuantity !== '') {
+            const selectedSnackInfo = snacks.find(item => item.type === selectedSnack);
+            if (selectedSnackInfo) {
+                const totalPrice = parseFloat(selectedSnackInfo.price) * parseInt(snackQuantity);
+                setSnackPrice(totalPrice.toString());
             }
         }
-    }, [snacksQuantity, snacksType]);
+    }, [snackQuantity, selectedSnack]);
 
     const handleAddSnack = () => {
-        if (snacksType !== '' && snacksQuantity !== '' && snacksPrice !== '') {
+        if (selectedSnack !== '' && snackQuantity !== '' && snackPrice !== '') {
             const newSnack = {
-                type: snacksType,
-                quantity: parseInt(snacksQuantity),
-                price: parseFloat(snacksPrice)
+                type: selectedSnack,
+                quantity: parseInt(snackQuantity),
+                price: parseFloat(snackPrice)
             };
             setSelectedSnacks([...selectedSnacks, newSnack]);
-            setSnacksType('');
-            setSnacksQuantity('');
-            setSnacksPrice('');
+            setSelectedSnack('');
+            setSnackQuantity('');
+            setSnackPrice('');
         }
     };
 
+    useEffect(() => {
+        onAddSnacks(selectedSnacks);
+    }, [selectedSnacks]);
+
     return (
         <View>
-            <Text style={styles.label}>Add Snack:</Text>
+            <Text style={styles.label}>Add Snacks:</Text>
             <View style={styles.selectContainer}>
                 <Picker
-                    selectedValue={snacksType}
-                    onValueChange={(itemValue, itemIndex) => setSnacksType(itemValue)}
+                    selectedValue={selectedSnack}
+                    onValueChange={(itemValue, itemIndex) => setSelectedSnack(itemValue)}
                     style={styles.selectInput}
                 >
-                    <Picker.Item label="Select Snacks Type" value="" />
-                    {snackTypes.map((snack, index) => (
+                    <Picker.Item label="Select Snack Type" value="" />
+                    {snacks.map((snack, index) => (
                         <Picker.Item key={index} label={snack.type} value={snack.type} />
                     ))}
                 </Picker>
             </View>
 
-            <Text style={styles.label}>Snacks Quantity:</Text>
+            <Text style={styles.label}>Snack Quantity:</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter Snacks Quantity"
-                value={snacksQuantity}
-                onChangeText={setSnacksQuantity}
+                placeholder="Enter Snack Quantity"
+                value={snackQuantity}
+                onChangeText={setSnackQuantity}
                 keyboardType="numeric"
             />
 
-            <Text style={styles.label}>Snacks Price:</Text>
+            <Text style={styles.label}>Snack Price:</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Snacks Price"
-                value={snacksPrice}
-                onChangeText={setSnacksPrice}
+                placeholder="Snack Price"
+                value={snackPrice + '$'}
+                onChangeText={setSnackPrice}
                 keyboardType="numeric"
                 editable={false}
             />
 
-            <Button title="Add Snack" onPress={handleAddSnack} />
-
             {selectedSnacks.map((snack, index) => (
                 <View key={index}>
-                    <Text>{`Type: ${snack.type}, Quantity: ${snack.quantity}, Price: ${snack.price}`}</Text>
+                    <Text>{`Type: ${snack.type}, Quantity: ${snack.quantity}, Price: ${snack.price + '$'}`}</Text>
                 </View>
             ))}
+
+            <Button title="Add Snack" onPress={handleAddSnack} />
         </View>
     );
 };

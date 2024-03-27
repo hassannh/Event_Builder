@@ -9,7 +9,7 @@ export const getAllEventsAction = (data) => ({
   });
 
 
-  export const CreateEventAction = (data) => ({
+  export const createEvent = (data) => ({
     type: CREATE_EVENT,
     payload: data,
   });

@@ -2,44 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const ToolsComponent = ({ tools }) => {
-    const [selectedTool, setSelectedTool] = useState('');
+const ToolsComponent = ({ tools, onAddTools }) => {
+    const [ToolType, setToolType] = useState('');
     const [toolQuantity, setToolQuantity] = useState('');
     const [toolPrice, setToolPrice] = useState('');
     const [selectedTools, setSelectedTools] = useState([]);
 
     useEffect(() => {
-        // Calculate tool price
         if (toolQuantity !== '') {
-            const selectedToolInfo = tools.find(item => item.type === selectedTool);
+            const selectedToolInfo = tools.find(item => item.type === ToolType);
             if (selectedToolInfo) {
                 const totalPrice = parseFloat(selectedToolInfo.price) * parseInt(toolQuantity);
                 setToolPrice(totalPrice.toString());
             }
         }
-    }, [toolQuantity, selectedTool]);
+    }, [toolQuantity, ToolType]);
 
     const handleAddTool = () => {
-        if (selectedTool !== '' && toolQuantity !== '' && toolPrice !== '') {
+        if (ToolType !== '' && toolQuantity !== '' && toolPrice !== '') {
             const newTool = {
-                type: selectedTool,
+                type: ToolType,
                 quantity: parseInt(toolQuantity),
                 price: parseFloat(toolPrice)
             };
             setSelectedTools([...selectedTools, newTool]);
-            setSelectedTool('');
+            onAddTools([...selectedTools, newTool]);
+            setToolType('');
             setToolQuantity('');
             setToolPrice('');
         }
     };
+
+    useEffect(() => {
+        onAddTools(selectedTools);
+    }, [selectedTools]);
 
     return (
         <View>
             <Text style={styles.label}>Add Tool:</Text>
             <View style={styles.selectContainer}>
                 <Picker
-                    selectedValue={selectedTool}
-                    onValueChange={(itemValue, itemIndex) => setSelectedTool(itemValue)}
+                    selectedValue={ToolType}
+                    onValueChange={(itemValue, itemIndex) => setToolType(itemValue)}
                     style={styles.selectInput}
                 >
                     <Picker.Item label="Select Tool Type" value="" />

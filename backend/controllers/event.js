@@ -12,9 +12,9 @@ const createEvent = async (req, res) => {
  
     try {
 
-        const { eventName, startDate, startTime, hoursNumber, location, personnel, snacks, tools } = req.body;
+        const { eventName, startDate, startTime, hoursNumber, location, personnel, tools ,userId} = req.body;
 
-        console.log(req.body);
+        console.log('useriddddd',req.body);
         
 
         const personnelIds = await Promise.all(personnel.map(async (item) => {
@@ -22,13 +22,6 @@ const createEvent = async (req, res) => {
             const personnelData = new Personnel({ type, quantity, price });
             const savedPersonnel = await personnelData.save();
             return savedPersonnel._id;
-        }));
-
-        const snacksIds = await Promise.all(snacks.map(async (item) => {
-            const { type, quantity, price } = item;
-            const snacksData = new Snacks({ type, quantity, price });
-            const savedSnacks = await snacksData.save();
-            return savedSnacks._id;
         }));
 
         const toolsIds = await Promise.all(tools.map(async (item) => {
@@ -39,7 +32,6 @@ const createEvent = async (req, res) => {
         }));
 
 
-
         const newEvent = new Event({
             eventName,
             startDate,
@@ -47,23 +39,43 @@ const createEvent = async (req, res) => {
             hoursNumber,
             location,
             personnel: personnelIds,
-            snacks: snacksIds,
-            tools: toolsIds
+            // snacks: snacksIds,
+            tools: toolsIds,
+            userId
         });
 
         const savedEvent = await newEvent.save();
         res.json(savedEvent);
+        console.log(savedEvent);
+
 
     } catch (error) {
         console.error('Error creating event:', error.message);
-        throw error;
     }
 
 };
 
 
 
+const GetEventsByUserId = async (req, res) => {
+    try {
+        const userId = req.params.userId; 
 
+        
+        const events = await Event.find({ userId: userId });
+
+        
+        if (!events || events.length === 0) {
+            return res.status(404).json({ message: 'No events found for the user ID' });
+        }
+
+        // If events are found, return them
+        res.json(events);
+    } catch (error) {
+        console.error('Error retrieving events by user ID:', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
 
 
 
@@ -125,4 +137,4 @@ const deleteEvent = async (req, res) => {
 
 };
 
-export { createEvent, eventServices, deleteEvent };
+export { createEvent, eventServices, deleteEvent ,GetEventsByUserId};
