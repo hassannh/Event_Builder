@@ -1,29 +1,57 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
-import React,{useEffect} from 'react'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native'
+import { useEffect ,useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllEventsAction } from '../Redux/Actions/eventAction';
+import { useNavigation } from '@react-navigation/native';
+import { GetEventThunkByUser, createEventThunk } from '../Redux/TunkMiddlwaire/eventThunk';
 import { FontAwesome } from "@expo/vector-icons";
 
 
 const SearchScreen = () => {
 
-
+  const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.user.UserData._id)
-  const events = useSelector(state => state.events);
 
-  console.log(events);
+  const userId = useSelector(state => state.auth.user.UserData._id)
+  const events = useSelector(state => state.event.events);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+
 
   useEffect(() => {
-    dispatch(getAllEventsAction(userId));
-  }, [userId]);
+    dispatch(GetEventThunkByUser(userId));
+  }, [dispatch, userId]);
 
+
+  const handleEventPress = (event) => {
+    navigation.navigate('details', { event });
+  };
+
+
+  const renderItem = ({ item }) => (
+
+    <TouchableOpacity onPress={() => handleEventPress(item)}>
+    <ScrollView style={styles.card}>
+      <Image
+        // source={event.image}
+        source={require('../assets/Eventoday.jpg')}
+        style={styles.cardImage}
+      />
+      <View style={styles.cardContent}>
+        <Text style={styles.eventName}>{item.eventName}</Text>
+        <Text style={styles.eventDate}>{item.startDate}</Text>
+        <Text style={styles.eventDate}>{item.hoursNumber}</Text>
+        <Text style={styles.eventDate}>{item.startTime}</Text>
+     
+      </View>
+    </ScrollView>
+    </TouchableOpacity>
+  );
 
 
   return (
     <View>
       <View style={styles.searchHeader}>
-        <Text style={{ fontSize: 30,fontWeight: "bold",}}>
+        <Text style={{ fontSize: 30, fontWeight: "bold", }}>
           Search
         </Text>
       </View>
@@ -44,15 +72,14 @@ const SearchScreen = () => {
 
 
 
-      <View >
-
-     
-
-      </View>
-
-
+      <FlatList
+        data={events}
+        renderItem={renderItem}
+        keyExtractor={item => item._id}
+      />
 
     </View>
+
   )
 }
 
@@ -88,6 +115,39 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingBottom: 20,
     marginBottom: 40,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    margin: 10,
+  },
+  cardImage: {
+    width: '100%',
+    height: 200,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  cardContent: {
+    padding: 10,
+  },
+  eventName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  eventDate: {
+    fontSize: 16,
+    color: '#888',
+    marginTop: 5,
+  },
+  eventLocation: {
+    fontSize: 16,
+    color: '#888',
+    marginTop: 5,
   },
 })
 

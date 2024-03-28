@@ -57,20 +57,43 @@ const createEvent = async (req, res) => {
 
 
 
+
 const GetEventsByUserId = async (req, res) => {
     try {
         const userId = req.params.userId; 
 
-        
-        const events = await Event.find({ userId: userId });
-
+        const events = await Event.find({ userId: userId })
+            .populate({
+                path: 'personnel',
+                select: 'type quantity price -_id' 
+            })
+            .populate({
+                path: 'tools',
+                select: 'type quantity price -_id' // Selecting only required fields and excluding _id
+            })
+            .select('eventName startDate startTime hoursNumber personnel tools -_id'); // Selecting only required fields and excluding _id
         
         if (!events || events.length === 0) {
             return res.status(404).json({ message: 'No events found for the user ID' });
         }
 
         // If events are found, return them
-        res.json(events);
+        res.json(events.map(event => ({
+            eventName: event.eventName,
+            startDate: event.startDate,
+            startTime: event.startTime,
+            hoursNumber: event.hoursNumber,
+            personnel: event.personnel.map(person => ({
+                type: person.type,
+                quantity: person.quantity,
+                price: person.price
+            })),
+            tools: event.tools.map(tool => ({
+                type: tool.type,
+                quantity: tool.quantity,
+                price: tool.price
+            }))
+        })));
     } catch (error) {
         console.error('Error retrieving events by user ID:', error.message);
         res.status(500).json({ message: 'Internal Server Error' });

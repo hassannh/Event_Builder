@@ -1,7 +1,6 @@
 import { GET_ALL_EVENTS, CREATE_EVENT } from "../Types/eventTypes";
 
 
-
 const initialState = {
     events: [],
     error: null,
@@ -22,7 +21,7 @@ const eventReducer = (state = initialState, action) => {
             case CREATE_EVENT:
             return {
                 ...state,
-                events: action.payload,
+                events: [...state.events, action.payload],
                 error: null
             };
 

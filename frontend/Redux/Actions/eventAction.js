@@ -3,9 +3,9 @@ import { CREATE_EVENT,GET_ALL_EVENTS} from '../Types/eventTypes'
 
 
 
-export const getAllEventsAction = (data) => ({
+export const getAllEventsAction = (event) => ({
     type: GET_ALL_EVENTS,
-    payload: data,
+    payload: event,
   });
 
 

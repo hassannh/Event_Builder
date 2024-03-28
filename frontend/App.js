@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './Redux/store'
 import navigator from './TabBarNavigation/Index'
+import EventDetailsScreen from './Screens/EventDetails';
 
 
 const Stack = createNativeStackNavigator();
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Navigator>
 
           <Stack.Screen name="AppTabs" component={navigator}  options={{ headerShown: false }}/>
+          <Stack.Screen name="details" component={EventDetailsScreen}  options={{ headerShown: true }}/>
 
         </Stack.Navigator>
 

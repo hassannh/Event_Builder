@@ -16,10 +16,6 @@ const eventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Personnel'
     }],
-    // snacks: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Snacks'
-    // }],
     tools: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tools'

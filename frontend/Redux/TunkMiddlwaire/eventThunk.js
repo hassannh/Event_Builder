@@ -1,9 +1,11 @@
 import axios from 'axios';
 import {CreateEventAction ,getAllEventsAction} from '../Actions/eventAction'
 
+
+
 const createEventThunk = (eventData) => async (dispatch) => {
     try {
-        console.log('eventthunk',eventData);
+        
         const response = await axios.post('http://192.168.15.96:8000/api/event/create', eventData, {
             headers: {
                 'Content-Type': 'application/json',
@@ -12,7 +14,7 @@ const createEventThunk = (eventData) => async (dispatch) => {
 
         const data = response.data;
 
-        console.log(data);
+        console.log('eventthunk',eventData);
 
         if (data ) {
             dispatch(CreateEventAction(data));
@@ -25,9 +27,9 @@ const createEventThunk = (eventData) => async (dispatch) => {
 };
 
 
-
-
 const GetEventThunkByUser = (userId) => async (dispatch) => {
+    console.log('hellloooooo');
+
     try {
         const response = await axios.get(`http://192.168.15.96:8000/api/event/getById/${userId}`, {
             headers: {
@@ -37,7 +39,8 @@ const GetEventThunkByUser = (userId) => async (dispatch) => {
 
         const data = response.data;
 
-        console.log(data);
+        console.log('hahya jat',data);
+
 
         if (data ) {
             dispatch(getAllEventsAction(data));
@@ -49,4 +52,4 @@ const GetEventThunkByUser = (userId) => async (dispatch) => {
     }
 };
 
-export default {createEventThunk , GetEventThunkByUser};
+export {createEventThunk , GetEventThunkByUser};

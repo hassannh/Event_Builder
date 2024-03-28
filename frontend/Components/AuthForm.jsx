@@ -2,7 +2,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Switch } from 'rea
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginTunk, registerTunk } from '../Redux/TunkMiddlwire/authTunk'
+import { loginTunk, registerTunk } from '../Redux/TunkMiddlwaire/authTunk'
 import * as Animatable from 'react-native-animatable';
 
 

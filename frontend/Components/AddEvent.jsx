@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Button, ScrollView } from 'react-native';
 import { useDispatch ,useSelector} from 'react-redux';
-import  createEventThunk  from '../Redux/TunkMiddlwire/eventThunk'
+import  createEventThunk  from '../Redux/TunkMiddlwaire/eventThunk'
 import DatePicker from "expo-datepicker";
 import { Picker } from '@react-native-picker/picker';
 import { Entypo } from "@expo/vector-icons";
